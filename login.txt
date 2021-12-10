@@ -1,0 +1,16 @@
+{
+    "admin" : {
+        "name" : "admin",
+        "password" : "admin"
+    },
+    "guest" : {
+        "0" : {
+            "name" : "123",
+            "password" : "123"
+        },
+        "1" : {
+            "name" : "456",
+            "password" : "456"
+        }
+    }
+}
