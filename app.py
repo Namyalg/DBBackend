@@ -1,12 +1,31 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask import request
+from generate_data import integrate
 import json
+import csv
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello_world():
-    return ({"hello" : "world"})
+@app.route("/table/<int:k>/<int:doblvl>/<int:wclasslvl>")
+def get_table(k, doblvl, wclasslvl):
+    integrate(k, doblvl, wclasslvl)
+    with_suppression = convert_csv_to_arr("with_suppression.csv")
+    without_suppression = convert_csv_to_arr("without_suppression.csv")
+    return {"with_suppression" : with_suppression, "without_suppression" : without_suppression}
+
+
+def convert_csv_to_arr(path):
+    rows = []
+    with open(path, 'r') as file:
+        csvreader = csv.reader(file)
+        header = next(csvreader)
+        for row in csvreader:
+            rows.append(row) 
+        return rows
+
+@app.route("/test")
+def table():
+    return "<p>Testing</p>"
 
 @app.route("/access/<string:utype>/<string:operation>/<string:name>/<string:password>")
 def login(utype, operation, name, password):
@@ -46,6 +65,5 @@ def login(utype, operation, name, password):
 
     return ({"status" : 0, "msg" : "no operation", "place" : [utype, operation, name, password]})
 
-
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', port=8473)
