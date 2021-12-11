@@ -6,6 +6,11 @@ import csv
 
 app = Flask(__name__)
 
+@app.route("/")
+def hello_world():
+    return "<p>Hello world</p>"
+
+
 @app.route("/table/<int:k>/<int:doblvl>/<int:wclasslvl>")
 def get_table(k, doblvl, wclasslvl):
     integrate(k, doblvl, wclasslvl)
