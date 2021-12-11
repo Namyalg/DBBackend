@@ -71,4 +71,4 @@ def login(utype, operation, name, password):
     return ({"status" : 0, "msg" : "no operation", "place" : [utype, operation, name, password]})
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8473)
+    app.run()
