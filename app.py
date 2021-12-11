@@ -23,10 +23,11 @@ def convert_csv_to_arr(path):
     rows = []
     with open(path, 'r') as file:
         csvreader = csv.reader(file)
-        header = next(csvreader)
+        # header = next(csvreader)
         for row in csvreader:
             rows.append(row) 
         return rows
+    return []
 
 @app.route("/test")
 def table():
@@ -71,4 +72,4 @@ def login(utype, operation, name, password):
     return ({"status" : 0, "msg" : "no operation", "place" : [utype, operation, name, password]})
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port=7542)
