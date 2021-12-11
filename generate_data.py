@@ -130,7 +130,6 @@ def integrate(k, doblvl, wclasslvl):
     sample = pd.concat([table["dob"], table["workclass"], table["occupation"]], axis=1, keys=headers)
     sample.to_csv("sample.csv")
     index = 0
-
     gtable = sample.copy(deep=True)
     idx.append((doblvl, wclasslvl))
     print()
