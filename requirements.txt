@@ -7,6 +7,7 @@ gunicorn
 autopep8
 certifi
 click
+flask-cors
 Flask==1.1.2
 gunicorn
 isort

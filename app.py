@@ -3,8 +3,10 @@ from flask import request
 from generate_data import integrate
 import json
 import csv
-
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
+
 
 @app.route("/")
 def hello_world():
