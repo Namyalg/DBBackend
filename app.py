@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_file
 from flask import request
 from generate_data import integrate
 import json
@@ -13,14 +13,19 @@ def hello_world():
     return "<p>Hello world</p>"
 
 
-@app.route("/table/<int:k>/<int:doblvl>/<int:wclasslvl>")
-def get_table(k, doblvl, wclasslvl):
-    integrate(k, doblvl, wclasslvl)
+@app.route("/table/<int:sz>/<int:k>/<int:doblvl>/<int:wclasslvl>")
+def get_table(sz, k, doblvl, wclasslvl):
+    integrate(sz, k, doblvl, wclasslvl)
     with_suppression = convert_csv_to_arr("with_suppression.csv")
     without_suppression = convert_csv_to_arr("without_suppression.csv")
     return {"with_suppression" : with_suppression, "without_suppression" : without_suppression}
 
 
+@app.route("/image/<int:sz>/<int:k>")
+def get_plot(sz, k):
+    return send_file("plot.png", mimetype='image/png')
+    return "<p>Return plot</p>"
+    
 def convert_csv_to_arr(path):
     rows = []
     with open(path, 'r') as file:
@@ -37,7 +42,6 @@ def table():
 
 @app.route("/access/<string:utype>/<string:operation>/<string:name>/<string:password>")
 def login(utype, operation, name, password):
-    print(utype, operation, name, password)
     with open('login.json') as fobj:
         data = json.load(fobj)
         admin = data['admin']
@@ -74,4 +78,5 @@ def login(utype, operation, name, password):
     return ({"status" : 0, "msg" : "no operation", "place" : [utype, operation, name, password]})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=7542)
+    #app.run(host="0.0.0.0", port=7542) 
+    app.run()
