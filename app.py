@@ -18,7 +18,8 @@ def get_table(sz, k, doblvl, wclasslvl):
     integrate(sz, k, doblvl, wclasslvl)
     with_suppression = convert_csv_to_arr("with_suppression.csv")
     without_suppression = convert_csv_to_arr("without_suppression.csv")
-    return {"with_suppression" : with_suppression, "without_suppression" : without_suppression}
+    private_table = convert_csv_to_arr("sample.csv")
+    return {"with_suppression" : with_suppression, "without_suppression" : without_suppression, "private_table" : private_table}
 
 
 @app.route("/image/<int:sz>/<int:k>")
