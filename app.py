@@ -5,15 +5,17 @@ import json
 import csv
 from flask_cors import CORS
 app = Flask(__name__)
-CORS(app)
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route("/")
+#@crossdomain(origin='*',headers=['access-control-allow-origin','Content-Type'])
 def hello_world():
     return "<p>Hello world</p>"
 
 
 @app.route("/table/<int:sz>/<int:k>/<int:doblvl>/<int:wclasslvl>")
+#@crossdomain(origin='*',headers=['access-control-allow-origin','Content-Type'])
 def get_table(sz, k, doblvl, wclasslvl):
     integrate(sz, k, doblvl, wclasslvl)
     with_suppression = convert_csv_to_arr("with_suppression.csv")
@@ -23,6 +25,7 @@ def get_table(sz, k, doblvl, wclasslvl):
 
 
 @app.route("/image/<int:sz>/<int:k>")
+#@crossdomain(origin='*',headers=['access-control-allow-origin','Content-Type'])
 def get_plot(sz, k):
     return send_file("plot.png", mimetype='image/png')
     return "<p>Return plot</p>"
@@ -38,10 +41,12 @@ def convert_csv_to_arr(path):
     return []
 
 @app.route("/test")
+#@crossdomain(origin='*',headers=['access-control-allow-origin','Content-Type'])
 def table():
     return "<p>Testing</p>"
 
 @app.route("/access/<string:utype>/<string:operation>/<string:name>/<string:password>")
+#@crossdomain(origin='*',headers=['access-control-allow-origin','Content-Type'])
 def login(utype, operation, name, password):
     with open('login.json') as fobj:
         data = json.load(fobj)
