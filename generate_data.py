@@ -177,3 +177,5 @@ def integrate(number_of_records, k, doblvl, wclasslvl):
       for j in range(6):
           cp.append((i, j))
   generalise_all_combs(cp, sample, state, k)
+
+print(integrate(1000, 4, 2, 3))
