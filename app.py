@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, send_file
 from flask import request
 from generate_data import integrate
+from multi import multilevel_generalise
 import json
 import csv
 from flask_cors import CORS
@@ -12,6 +13,15 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 #@crossdomain(origin='*',headers=['access-control-allow-origin','Content-Type'])
 def hello_world():
     return "<p>Hello world</p>"
+
+
+@app.route("/multi/<int:sz>/<int:k>")
+#@crossdomain(origin='*',headers=['access-control-allow-origin','Content-Type'])
+def get_multi_table(sz, k):
+    multilevel_generalise(sz, k)
+    mlevel = convert_csv_to_arr("result.csv")
+    return {"multi_level" : mlevel}
+
 
 
 @app.route("/table/<int:sz>/<int:k>/<int:doblvl>/<int:wclasslvl>")

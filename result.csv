@@ -1,0 +1,11 @@
+,dob,workclass,occupation,level,g_dob,g_workclass
+4676,05/10/1987,private,profspecialty,"(4, 0)",1975-2000,private
+17851,26/07/1982,private,execmanagerial,"(4, 0)",1975-2000,private
+6556,25/08/1997,private,execmanagerial,"(4, 0)",1975-2000,private
+21143,02/03/1997,private,otherservice,"(4, 0)",1975-2000,private
+666,27/10/1975,private,craftrepair,"(4, 0)",1975-2000,private
+8164,30/01/1991,localgov,profspecialty,"(5, 5)",1975-2000,working
+13567,10/07/1986,notworking,nooccupation,"(5, 5)",1975-2000,notworking
+21680,28/01/1953,selfempnotinc,farmingfishing,"(5, 5)",1950-1975,working
+2469,28/02/1973,private,execmanagerial,"(5, 5)",1950-1975,working
+27714,17/01/2001,notworking,nooccupation,"(5, 5)",2000-2025,notworking
