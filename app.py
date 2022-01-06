@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, send_file
 from flask import request
+import sqlite3
 from generate_data import integrate
 from multi import multilevel_generalise
 import json
@@ -92,6 +93,54 @@ def login(utype, operation, name, password):
                      return {"status" : 0,  "msg" : "guest signup failure"}
 
     return ({"status" : 0, "msg" : "no operation", "place" : [utype, operation, name, password]})
+
+
+@app.route("/", methods=["POST"])
+def post_test():
+    connection = sqlite3.connect("databases/thirdparty.db")
+    print(request.get_json())
+    details = request.get_json()
+    cursor = connection.cursor()
+    print("contents")
+    
+    #cursor.execute("""INSERT INTO WORK VALUES (:f, :l, :p)""", {"f" : det['f'], "l" : det['l'], "p" : det['p']})
+    cursor.execute("""INSERT INTO THIRDPARTY VALUES (:org, :domain, :purpose, :country)""", {"org" : details['org'], 
+        "domain" : details['domain'], "purpose" : details['purpose'], 
+        "country" : details['country']})   
+
+    cursor.execute("""select * from THIRDPARTY""")
+    print(cursor.fetchall())
+    connection.commit()
+   
+    connection.close()
+
+    print(request.method)
+    
+    return {"fname" : "d"}
+
+
+@app.route("/<string:orgname>", methods=["DELETE"])
+def del_test(orgname):
+    connection = sqlite3.connect("databases/thirdparty.db")
+    print(request.get_json())
+    details = request.get_json()
+    cursor = connection.cursor()
+    print("contents")
+    
+    #cursor.execute("""INSERT INTO WORK VALUES (:f, :l, :p)""", {"f" : det['f'], "l" : det['l'], "p" : det['p']})
+    cursor.execute("""delete from THIRDPARTY where orgname = :org""", {"org" : orgname})   
+
+    cursor.execute("""select * from THIRDPARTY""")
+    print(cursor.fetchall())
+    connection.commit()
+    connection.close()
+    print(request.method)
+    return {"fname" : "d"}
+
+
+
+
+
 
 if __name__ == "__main__":
     #app.run(host="0.0.0.0", port=7542) 
