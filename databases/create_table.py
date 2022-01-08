@@ -5,10 +5,10 @@ conn = sqlite3.connect("tables.db")
 cur = conn.cursor()
 
 
-cur.execute("""
-        create table PROVIDES (country text, ano text, date DATE, FOREIGN KEY(country) references GOV(country), FOREIGN KEY(ano) references PARENT(ano)
-        )
-""")
+# cur.execute("""
+#         create table PROVIDES (country text, ano text, date DATE, FOREIGN KEY(country) references GOV(country), FOREIGN KEY(ano) references PARENT(ano)
+#         )
+# """)
 # cur.execute("""
 #         create table PERSON (ano text PRIMARY KEY UNIQUE, age integer, race text, capital_loss integer, hours integer, sex text, native_country text, speciality text, marital_status text, edno integer, fnlwgt integer, workclass text, country text, capital_gain integer)
 # """)
@@ -24,9 +24,9 @@ cur.execute("""
 
 #create table e2(a text, FOREIGN key (a) REFERENCES e1(a) on DELETE CASCADE)
 
-# cur.execute("""
-#         create table JURISDICTION (jurisdiction text, empid text UNIQUE, FOREIGN KEY(empid) references CENSUSCOLLECTOR(empid) ON DELETE CASCADE ON UPDATE CASCADE)
-# """)
+cur.execute("""
+        create table JURISDICTION (empid text UNIQUE, jurisdiction text, FOREIGN KEY(empid) references CENSUSCOLLECTOR(empid) ON DELETE CASCADE ON UPDATE CASCADE)
+""")
 
 # cur.execute("""
 #         create table THIRDPARTY (orgname text PRIMARY KEY UNIQUE, domain text, purpose text, country text, FOREIGN KEY(country) references GOV(country))

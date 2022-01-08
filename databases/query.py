@@ -22,7 +22,7 @@ cur.execute("PRAGMA foreign_keys")
 # """)
 
 cur.execute("""
-    insert into GOV values("India", "xyz")
+    drop table JURISDICTION
 """)
 
 print(cur.fetchall())
