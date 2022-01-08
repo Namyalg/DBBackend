@@ -116,6 +116,8 @@ def post_test():
     return {"fname" : "d"}
 
 
+
+
 @app.route("/<string:orgname>", methods=["DELETE"])
 def del_test(orgname):
     connection = sqlite3.connect("databases/thirdparty.db")
@@ -143,10 +145,10 @@ def get_person():
     cursor.execute("""
         select * from PERSON
     """)
-    p = (cursor.fetchall())
+    response = cursor.fetchall()
     connection.commit()
     connection.close()
-    return {"response" : p}
+    return {"response" : response}
 
 
 @app.route("/person/age/<int:lage>/<int:hage>", methods=["GET"])
@@ -172,6 +174,22 @@ def get_person_workclass(wclass):
     connection.commit()
     connection.close()
     return {"response" : response}
+
+@app.route("/person", methods=["POST"])
+def insert_person():
+    connection = sqlite3.connect("databases/person.db")
+    cursor = connection.cursor()
+    print(request.get_json())
+    details = request.get_json()
+    cursor.execute("""
+        insert into PERSON values (:ano, :age, :race, :capital_loss, :hours, :sex, :native_country, :speciality, :marital_status, :edno, :fnlwgt, :workclass, :country, :capital_gain)
+    """, {"ano" : details["ano"], "age" : details["age"], "race" : details["race"], "capital_loss" : details["capital_loss"], "hours": details["hours"], "sex" : details["sex"], "native_country" : details["native_country"], "speciality" : details["speciality"], "marital_status" : details["marital_status"], "edno" : details["edno"], "fnlwgt" : details["edno"], "workclass" : details["workclass"], "country" : details["country"], "capital_gain" : details["capital_gain"]})
+    cursor.execute("""select * from PERSON """)
+    response = (cursor.fetchall())
+    connection.commit()
+    connection.close()
+    return {"response" : response}
+
 
 #census collector
 @app.route("/census/", methods=["POST"])

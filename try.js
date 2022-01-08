@@ -1,6 +1,5 @@
 
-function add(event){
- 
+function add(event){ 
   axios.post('http://127.0.0.1:5000/', {
     org : document.getElementById('o').value,
     domain : document.getElementById('d').value,
