@@ -1,9 +1,11 @@
 from flask import Flask, jsonify, send_file
 from flask import request
 import sqlite3
+from person import *
 from generate_data import integrate
 from multi import multilevel_generalise
 import json
+from census import *
 import csv
 from flask_cors import CORS
 app = Flask(__name__)
@@ -139,107 +141,34 @@ def del_test(orgname):
 
 #person related queries
 @app.route("/person", methods=["GET"])
-def get_person():
-    connection = sqlite3.connect("databases/person.db")
-    cursor = connection.cursor()
-    cursor.execute("""
-        select * from PERSON
-    """)
-    response = cursor.fetchall()
-    connection.commit()
-    connection.close()
-    return {"response" : response}
-
+def getperson():
+    return get_person()
 
 @app.route("/person/age/<int:lage>/<int:hage>", methods=["GET"])
-def get_person_age(lage, hage):
-    connection = sqlite3.connect("databases/person.db")
-    cursor = connection.cursor()
-    cursor.execute("""
-        select * from PERSON where age >= :lage and age <= :hage
-    """, {"lage" : lage, "hage" : hage})
-    response = (cursor.fetchall())
-    connection.commit()
-    connection.close()
-    return {"response" : response}
+def getpersonage(lage, hage):
+    return get_person_age()
 
 @app.route("/person/workclass/<string:wclass>", methods=["GET"])
-def get_person_workclass(wclass):
-    connection = sqlite3.connect("databases/person.db")
-    cursor = connection.cursor()
-    cursor.execute("""
-        select * from PERSON where workclass = :wclass
-    """, {"wclass" : wclass})
-    response = (cursor.fetchall())
-    connection.commit()
-    connection.close()
-    return {"response" : response}
+def getpersonworkclass(wclass):
+    return get_person_workclass(wclass)
 
 @app.route("/person", methods=["POST"])
-def insert_person():
-    connection = sqlite3.connect("databases/person.db")
-    cursor = connection.cursor()
-    print(request.get_json())
-    details = request.get_json()
-    cursor.execute("""
-        insert into PERSON values (:ano, :age, :race, :capital_loss, :hours, :sex, :native_country, :speciality, :marital_status, :edno, :fnlwgt, :workclass, :country, :capital_gain)
-    """, {"ano" : details["ano"], "age" : details["age"], "race" : details["race"], "capital_loss" : details["capital_loss"], "hours": details["hours"], "sex" : details["sex"], "native_country" : details["native_country"], "speciality" : details["speciality"], "marital_status" : details["marital_status"], "edno" : details["edno"], "fnlwgt" : details["edno"], "workclass" : details["workclass"], "country" : details["country"], "capital_gain" : details["capital_gain"]})
-    cursor.execute("""select * from PERSON """)
-    response = (cursor.fetchall())
-    connection.commit()
-    connection.close()
-    return {"response" : response}
-
+def insertperson():
+    return insert_person()
+    
 
 #census collector
 @app.route("/census/", methods=["POST"])
-def insert_census_collector():
-    details = request.get_json()
-    print(details)
-
-    connection = sqlite3.connect("databases/censuscollector.db")
-    cursor = connection.cursor()
-    cursor.execute("""
-        insert into CENSUSCOLLECTOR values(:empid, :age, :salary, :country)
-    """, {"empid" : details['empid'], "age" : details['age'], "salary" : details['salary'], "country" : details['country']})
-    # # response = (cursor.fetchall())
-    cursor.execute("""
-        select * from CENSUSCOLLECTOR
-    """)
-    print(cursor.fetchall())
-    connection.commit()
-    connection.close()
-    return {"response" : []}
+def insertcensuscollector():
+    return insert_census_collector()
 
 @app.route("/census/<string:empid>", methods=["DELETE"])
-def delete_census_collector(empid):
-    connection = sqlite3.connect("databases/censuscollector.db")
-    cursor = connection.cursor()
-    cursor.execute("""select * from CENSUSCOLLECTOR""")
-    print(cursor.fetchall())
-    cursor.execute("""
-        delete from CENSUSCOLLECTOR where empid = :empid
-    """, {"empid" : empid})
-    cursor.execute("""
-        select * from CENSUSCOLLECTOR
-    """)
-
-    print(cursor.fetchall())
-    connection.commit()
-    connection.close()
-    return {"response" : []}
-
+def deletecensuscollector(empid):
+    return delete_census_collector(empid)
+   
 @app.route("/census", methods=["GET"])
-def get_census_collector():
-    connection = sqlite3.connect("databases/censuscollector.db")
-    cursor = connection.cursor()
-    cursor.execute("""
-        select * from CENSUSCOLLECTOR
-    """)
-    response = cursor.fetchall()
-    connection.commit()
-    connection.close()
-    return {"response" : response}
+def getcensuscollector():
+    return get_census_collector()
 
 
 if __name__ == "__main__":
