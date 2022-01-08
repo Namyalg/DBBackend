@@ -35,7 +35,7 @@ def get_jurisdiction_by_id(j):
         response = cursor.fetchall()
         connection.commit()
         connection.close()
-        return {"response" : response.  "status" : 1}
+        return {"response" : response, "status" : 1}
     except sqlite3.OperationalError:
         time.sleep(random.randint(10, 20))
         return {"response " : "waiting, try again",  "status" : 0}
