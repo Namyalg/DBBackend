@@ -132,6 +132,21 @@ def getcensuscollector():
     return get_census_collector()
 
 
+#jurisdiction
+@app.route("/jurisdiction", methods=["GET"])
+def getjurisdiction():
+    return get_jurisdiction()
+
+@app.route("/jurisdiction/<string:jurisdiction>", methods=["GET"])
+def getjurisdictionbyid(jurisdiction):
+    return get_jurisdiction_by_id(jurisdiction)
+
+@app.route("/jurisdiction", methods=["POST"])
+def insertjurisdiction():
+    return insert_jurisdiction()
+    
+
+
 #third party
 @app.route("/thirdparty", methods=["GET"])
 def getthirdparty():
@@ -149,20 +164,6 @@ def delthirdparty(orgname):
 def updatepurpose():
     return update_purpose()
 
-
-#jurisdiction
-@app.route("/jurisdiction", methods=["GET"])
-def getjurisdiction():
-    return get_jurisdiction()
-
-@app.route("/jurisdiction/<string:jurisdiction>", methods=["GET"])
-def getjurisdictionbyid(jurisdiction):
-    return get_jurisdiction(jurisdiction)
-
-@app.route("/jurisdiction", methods=["POST"])
-def insertjurisdiction():
-    return insert_jurisdiction()
-    
 
 if __name__ == "__main__":
     #app.run(host="0.0.0.0", port=7542) 
