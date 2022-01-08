@@ -111,11 +111,8 @@ def post_test():
     cursor.execute("""select * from THIRDPARTY""")
     print(cursor.fetchall())
     connection.commit()
-   
     connection.close()
-
     print(request.method)
-    
     return {"fname" : "d"}
 
 
@@ -202,7 +199,6 @@ def delete_census_collector(empid):
     cursor = connection.cursor()
     cursor.execute("""select * from CENSUSCOLLECTOR""")
     print(cursor.fetchall())
-
     cursor.execute("""
         delete from CENSUSCOLLECTOR where empid = :empid
     """, {"empid" : empid})
@@ -214,6 +210,18 @@ def delete_census_collector(empid):
     connection.commit()
     connection.close()
     return {"response" : []}
+
+@app.route("/census", methods=["GET"])
+def get_census_collector():
+    connection = sqlite3.connect("databases/censuscollector.db")
+    cursor = connection.cursor()
+    cursor.execute("""
+        select * from CENSUSCOLLECTOR
+    """)
+    response = cursor.fetchall()
+    connection.commit()
+    connection.close()
+    return {"response" : response}
 
 
 if __name__ == "__main__":
