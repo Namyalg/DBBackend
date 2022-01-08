@@ -3,7 +3,8 @@ from flask import request
 import sqlite3
 from person import *
 from jurisdiction import *
-from thirdparty import *
+import random
+import time
 from thirdparty import *
 from generate_data import integrate
 from multi import multilevel_generalise
@@ -161,7 +162,8 @@ def getjurisdictionbyid(jurisdiction):
 @app.route("/jurisdiction", methods=["POST"])
 def insertjurisdiction():
     return insert_jurisdiction()
+    
 
 if __name__ == "__main__":
     #app.run(host="0.0.0.0", port=7542) 
-    app.run(use_reloader=True)
+    app.run(use_reloader=True, debug=True)
