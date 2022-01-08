@@ -4,7 +4,9 @@ import sqlite3
 conn = sqlite3.connect("tables.db")
 cur = conn.cursor()
 
-
+cur.execute("""
+        drop table CENSUSCOLLECTOR
+""")
 # cur.execute("""
 #         create table PROVIDES (country text, ano text, date DATE, FOREIGN KEY(country) references GOV(country), FOREIGN KEY(ano) references PARENT(ano)
 #         )
@@ -16,17 +18,17 @@ cur = conn.cursor()
 # cur.execute("""create table GOV (country text PRIMARY KEY UNIQUE, census_officer text)
 # """)
 
-# cur.execute("""
-#         create table CENSUSCOLLECTOR (empid text PRIMARY KEY UNIQUE, age integer, salary integer, country text, FOREIGN KEY(country) references GOV(country))
-# """)
+cur.execute("""
+        create table CENSUSCOLLECTOR (empid text PRIMARY KEY, age integer, salary integer, country text, FOREIGN KEY(country) references GOV(country))
+""")
 
 #cur.execute("drop table JURISDICTION")
 
 #create table e2(a text, FOREIGN key (a) REFERENCES e1(a) on DELETE CASCADE)
 
-cur.execute("""
-        create table JURISDICTION (empid text UNIQUE, jurisdiction text, FOREIGN KEY(empid) references CENSUSCOLLECTOR(empid) ON DELETE CASCADE ON UPDATE CASCADE)
-""")
+# cur.execute("""
+#         create table JURISDICTION (empid text UNIQUE, jurisdiction text, FOREIGN KEY(empid) references CENSUSCOLLECTOR(empid) ON DELETE CASCADE ON UPDATE CASCADE)
+# """)
 
 # cur.execute("""
 #         create table THIRDPARTY (orgname text PRIMARY KEY UNIQUE, domain text, purpose text, country text, FOREIGN KEY(country) references GOV(country))
