@@ -1,6 +1,6 @@
 import sqlite3
 
-#conn = sqlite3.connect("person.db")
+
 conn = sqlite3.connect("tables.db")
 cur = conn.cursor()
 
