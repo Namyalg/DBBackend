@@ -106,7 +106,7 @@ def getperson():
 
 @app.route("/person/age/<int:lage>/<int:hage>", methods=["GET"])
 def getpersonage(lage, hage):
-    return get_person_age()
+    return get_person_age(lage, hage)
 
 @app.route("/person/workclass/<string:wclass>", methods=["GET"])
 def getpersonworkclass(wclass):
@@ -129,7 +129,6 @@ def deletecensuscollector(empid):
 @app.route("/census", methods=["GET"])
 def getcensuscollector():
     return get_census_collector()
-
 
 
 #third party
