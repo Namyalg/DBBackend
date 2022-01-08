@@ -1,18 +1,28 @@
 import sqlite3
 
 #conn = sqlite3.connect("person.db")
-conn = sqlite3.connect("person.db")
+conn = sqlite3.connect("tables.db")
 cur = conn.cursor()
 
 
-cur.execute("""
-        insert into PERSON VALUES("1", 23, "asian", 100, 40, "F", "India", "professor", "not married", 20, 0, "teacher", "India", 200)
-""")
+# cur.execute("""
+#         insert into CENSUSCOLLECTOR VALUES("1", 23, "asian", 100, 40, "F", "India", "professor", "not married", 20, 0, "teacher", "India", 200)
+# """)
 
-conn.commit()
+cur.execute("PRAGMA foreign_keys = ON")
+cur.execute("PRAGMA foreign_keys")
+
+# cur.execute("""
+#         insert into JURISDICTION values ("Blore", "E3")
+# """)
+# conn.commit()
+
+# cur.execute("""
+#         select * from JURISDICTION
+# """)
 
 cur.execute("""
-        select * from PERSON
+    insert into GOV values("India", "xyz")
 """)
 
 print(cur.fetchall())

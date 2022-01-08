@@ -1,12 +1,12 @@
 import sqlite3
 
 #conn = sqlite3.connect("person.db")
-conn = sqlite3.connect("provides.db")
+conn = sqlite3.connect("tables.db")
 cur = conn.cursor()
 
 
 cur.execute("""
-        create table PROVIDES (country text, ano text, date DATE, FOREIGN KEY(country) references PARENT(GOV), FOREIGN KEY(ano) references PARENT(PERSON)
+        create table PROVIDES (country text, ano text, date DATE, FOREIGN KEY(country) references GOV(country), FOREIGN KEY(ano) references PARENT(ano)
         )
 """)
 # cur.execute("""
@@ -17,20 +17,23 @@ cur.execute("""
 # """)
 
 # cur.execute("""
-#         create table CENSUSCOLLECTOR (empid text PRIMARY KEY UNIQUE, age integer, salary integer, country text, FOREIGN KEY(country) references parent(GOV))
+#         create table CENSUSCOLLECTOR (empid text PRIMARY KEY UNIQUE, age integer, salary integer, country text, FOREIGN KEY(country) references GOV(country))
 # """)
 
+#cur.execute("drop table JURISDICTION")
+
+#create table e2(a text, FOREIGN key (a) REFERENCES e1(a) on DELETE CASCADE)
 
 # cur.execute("""
-#         create table JURISDICTION (empid text, jurisdiction text, FOREIGN KEY(empid) references PARENT(CENSUSCOLLECTOR))
+#         create table JURISDICTION (jurisdiction text, empid text UNIQUE, FOREIGN KEY(empid) references CENSUSCOLLECTOR(empid) ON DELETE CASCADE ON UPDATE CASCADE)
 # """)
 
 # cur.execute("""
-#         create table THIRDPARTY (orgname text PRIMARY KEY UNIQUE, domain text, purpose text, country text, FOREIGN KEY(country) references PARENT(GOV))
+#         create table THIRDPARTY (orgname text PRIMARY KEY UNIQUE, domain text, purpose text, country text, FOREIGN KEY(country) references GOV(country))
 # """)
 
 # cur.execute("""
-#         create table EDUCATION (ano text, education text, FOREIGN KEY(ano) REFERENCES PARENT(PERSON))
+#         create table EDUCATION (ano text, education text, FOREIGN KEY(ano) REFERENCES PERSON(ano))
 # """)
 conn.commit()
 conn.close()

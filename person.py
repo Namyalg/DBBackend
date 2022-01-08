@@ -8,8 +8,9 @@ import csv
 from flask_cors import CORS
 
 def get_person():
-    connection = sqlite3.connect("databases/person.db")
+    connection = sqlite3.connect("databases/tables.db")
     cursor = connection.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
     cursor.execute("""
         select * from PERSON
     """)
@@ -20,8 +21,9 @@ def get_person():
 
 
 def get_person_age(lage, hage):
-    connection = sqlite3.connect("databases/person.db")
+    connection = sqlite3.connect("databases/tables.db")
     cursor = connection.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
     cursor.execute("""
         select * from PERSON where age >= :lage and age <= :hage
     """, {"lage" : lage, "hage" : hage})
@@ -32,8 +34,9 @@ def get_person_age(lage, hage):
 
 
 def get_person_workclass(wclass):
-    connection = sqlite3.connect("databases/person.db")
+    connection = sqlite3.connect("databases/tables.db")
     cursor = connection.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
     cursor.execute("""
         select * from PERSON where workclass = :wclass
     """, {"wclass" : wclass})
@@ -43,8 +46,9 @@ def get_person_workclass(wclass):
     return {"response" : response}
 
 def insert_person():
-    connection = sqlite3.connect("databases/person.db")
+    connection = sqlite3.connect("databases/tables.db")
     cursor = connection.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
     print(request.get_json())
     details = request.get_json()
     cursor.execute("""

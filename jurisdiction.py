@@ -1,4 +1,3 @@
-
 from flask import Flask, jsonify, send_file
 from flask import request
 import sqlite3
@@ -8,50 +7,34 @@ import json
 import csv
 from flask_cors import CORS
 
-def insert_census_collector():
+def get_jurisdiction():
+    connection = sqlite3.connect("databases/tables.db")
+    cursor = connection.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
+    cursor.execute("""select * from JURISDICTION""")
+    response = cursor.fetchall()
+    connection.commit()
+    connection.close()
+    return {"response" : response}
+
+def get_jurisdiction_by_id(j):
+    connection = sqlite3.connect("databases/tables.db")
+    cursor = connection.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
+    cursor.execute("""select empid from JURISDICTION where jurisdiction = :j""", {"j" : j})
+    response = cursor.fetchall()
+    connection.commit()
+    connection.close()
+    return {"response" : response}
+
+
+def insert_jurisdiction():
+    connection = sqlite3.connect("databases/tables.db")
     details = request.get_json()
-    print(details)
-
-    connection = sqlite3.connect("databases/tables.db")
     cursor = connection.cursor()
     cursor.execute("PRAGMA foreign_keys = ON")
-    cursor.execute("""
-        insert into CENSUSCOLLECTOR values(:empid, :age, :salary, :country)
-    """, {"empid" : details['empid'], "age" : details['age'], "salary" : details['salary'], "country" : details['country']})
-    # # response = (cursor.fetchall())
-    cursor.execute("""
-        select * from CENSUSCOLLECTOR
-    """)
-    response = cursor.fetchall()
-    connection.commit()
-    connection.close()
-    return {"response" : response}
-
-def delete_census_collector(empid):
-    connection = sqlite3.connect("databases/tables.db")
-    cursor = connection.cursor()
-    cursor.execute("PRAGMA foreign_keys = ON")
-    cursor.execute("""select * from CENSUSCOLLECTOR""")
-    print(cursor.fetchall())
-    cursor.execute("""
-        delete from CENSUSCOLLECTOR where empid = :empid
-    """, {"empid" : empid})
-    cursor.execute("""
-        select * from CENSUSCOLLECTOR
-    """)
-    response = cursor.fetchall()
-    connection.commit()
-    connection.close()
-    return {"response" : response}
-
-
-def get_census_collector():
-    connection = sqlite3.connect("databases/tables.db")
-    cursor = connection.cursor()
-    cursor.execute("PRAGMA foreign_keys = ON")
-    cursor.execute("""
-        select * from CENSUSCOLLECTOR
-    """)
+    cursor.execute("""insert into JURISDICTION values(:loc, :empid)""", {"empid" : details["empid"], "loc" : details['jurisdiction']})
+    cursor.execute("""select empid from JURISDICTION""")
     response = cursor.fetchall()
     connection.commit()
     connection.close()

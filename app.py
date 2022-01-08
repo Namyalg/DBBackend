@@ -2,6 +2,9 @@ from flask import Flask, jsonify, send_file
 from flask import request
 import sqlite3
 from person import *
+from jurisdiction import *
+from thirdparty import *
+from thirdparty import *
 from generate_data import integrate
 from multi import multilevel_generalise
 import json
@@ -96,49 +99,6 @@ def login(utype, operation, name, password):
 
     return ({"status" : 0, "msg" : "no operation", "place" : [utype, operation, name, password]})
 
-
-@app.route("/", methods=["POST"])
-def post_test():
-    connection = sqlite3.connect("databases/thirdparty.db")
-    print(request.get_json())
-    details = request.get_json()
-    cursor = connection.cursor()
-    print("contents")
-    
-    #cursor.execute("""INSERT INTO WORK VALUES (:f, :l, :p)""", {"f" : det['f'], "l" : det['l'], "p" : det['p']})
-    cursor.execute("""INSERT INTO THIRDPARTY VALUES (:org, :domain, :purpose, :country)""", {"org" : details['org'], 
-        "domain" : details['domain'], "purpose" : details['purpose'], 
-        "country" : details['country']})   
-
-    cursor.execute("""select * from THIRDPARTY""")
-    print(cursor.fetchall())
-    connection.commit()
-    connection.close()
-    print(request.method)
-    return {"fname" : "d"}
-
-
-
-
-@app.route("/<string:orgname>", methods=["DELETE"])
-def del_test(orgname):
-    connection = sqlite3.connect("databases/thirdparty.db")
-    print(request.get_json())
-    details = request.get_json()
-    cursor = connection.cursor()
-    print("contents")
-    
-    #cursor.execute("""INSERT INTO WORK VALUES (:f, :l, :p)""", {"f" : det['f'], "l" : det['l'], "p" : det['p']})
-    cursor.execute("""delete from THIRDPARTY where orgname = :org""", {"org" : orgname})   
-
-    cursor.execute("""select * from THIRDPARTY""")
-    print(cursor.fetchall())
-    connection.commit()
-    connection.close()
-    print(request.method)
-    return {"fname" : "d"}
-
-
 #person related queries
 @app.route("/person", methods=["GET"])
 def getperson():
@@ -170,6 +130,38 @@ def deletecensuscollector(empid):
 def getcensuscollector():
     return get_census_collector()
 
+
+
+#third party
+@app.route("/thirdparty", methods=["GET"])
+def getthirdparty():
+    return get_third_party()
+
+@app.route("/thirdparty", methods=["POST"])
+def insertthirdparty():
+    return insert_third_party()
+
+@app.route("/thirdparty/<string:orgname>", methods=["DELETE"])
+def delthirdparty(orgname):
+    return del_third_party(orgname)
+
+@app.route("/thirdparty", methods=["PUT"])
+def updatepurpose():
+    return update_purpose()
+
+
+#jurisdiction
+@app.route("/jurisdiction", methods=["GET"])
+def getjurisdiction():
+    return get_jurisdiction()
+
+@app.route("/jurisdiction/<string:jurisdiction>", methods=["GET"])
+def getjurisdictionbyid(jurisdiction):
+    return get_jurisdiction(jurisdiction)
+
+@app.route("/jurisdiction", methods=["POST"])
+def insertjurisdiction():
+    return insert_jurisdiction()
 
 if __name__ == "__main__":
     #app.run(host="0.0.0.0", port=7542) 
