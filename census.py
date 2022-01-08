@@ -53,7 +53,7 @@ def delete_census_collector(empid):
         connection.close()
         return {"response" : response, "status" : 1}
     except sqlite3.OperationalError:
-        time.sleep(random.randint(10, 30))
+        time.sleep(random.randint(10, 20))
         return {"response " : "waiting, try again", "status" : 0}
     except sqlite3.IntegrityError:
         return {"response " : "Violation of Foreign Key constraint", "status" : 0}
