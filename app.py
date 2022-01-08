@@ -138,8 +138,82 @@ def del_test(orgname):
     return {"fname" : "d"}
 
 
+#person related queries
+@app.route("/person", methods=["GET"])
+def get_person():
+    connection = sqlite3.connect("databases/person.db")
+    cursor = connection.cursor()
+    cursor.execute("""
+        select * from PERSON
+    """)
+    p = (cursor.fetchall())
+    connection.commit()
+    connection.close()
+    return {"response" : p}
 
 
+@app.route("/person/age/<int:lage>/<int:hage>", methods=["GET"])
+def get_person_age(lage, hage):
+    connection = sqlite3.connect("databases/person.db")
+    cursor = connection.cursor()
+    cursor.execute("""
+        select * from PERSON where age >= :lage and age <= :hage
+    """, {"lage" : lage, "hage" : hage})
+    response = (cursor.fetchall())
+    connection.commit()
+    connection.close()
+    return {"response" : response}
+
+@app.route("/person/workclass/<string:wclass>", methods=["GET"])
+def get_person_workclass(wclass):
+    connection = sqlite3.connect("databases/person.db")
+    cursor = connection.cursor()
+    cursor.execute("""
+        select * from PERSON where workclass = :wclass
+    """, {"wclass" : wclass})
+    response = (cursor.fetchall())
+    connection.commit()
+    connection.close()
+    return {"response" : response}
+
+#census collector
+@app.route("/census/", methods=["POST"])
+def insert_census_collector():
+    details = request.get_json()
+    print(details)
+
+    connection = sqlite3.connect("databases/censuscollector.db")
+    cursor = connection.cursor()
+    cursor.execute("""
+        insert into CENSUSCOLLECTOR values(:empid, :age, :salary, :country)
+    """, {"empid" : details['empid'], "age" : details['age'], "salary" : details['salary'], "country" : details['country']})
+    # # response = (cursor.fetchall())
+    cursor.execute("""
+        select * from CENSUSCOLLECTOR
+    """)
+    print(cursor.fetchall())
+    connection.commit()
+    connection.close()
+    return {"response" : []}
+
+@app.route("/census/<string:empid>", methods=["DELETE"])
+def delete_census_collector(empid):
+    connection = sqlite3.connect("databases/censuscollector.db")
+    cursor = connection.cursor()
+    cursor.execute("""select * from CENSUSCOLLECTOR""")
+    print(cursor.fetchall())
+
+    cursor.execute("""
+        delete from CENSUSCOLLECTOR where empid = :empid
+    """, {"empid" : empid})
+    cursor.execute("""
+        select * from CENSUSCOLLECTOR
+    """)
+
+    print(cursor.fetchall())
+    connection.commit()
+    connection.close()
+    return {"response" : []}
 
 
 if __name__ == "__main__":
