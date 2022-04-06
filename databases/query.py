@@ -12,8 +12,7 @@ cur.execute("""
 #         insert into CENSUSCOLLECTOR VALUES("1", 23, "asian", 100, 40, "F", "India", "professor", "not married", 20, 0, "teacher", "India", 200)
 # """)
 
-cur.execute("PRAGMA foreign_keys = ON")
-cur.execute("PRAGMA foreign_keys")
+
 
 # cur.execute("""
 #         insert into JURISDICTION values ("Blore", "E3")

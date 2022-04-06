@@ -9,6 +9,7 @@ from thirdparty import *
 from generate_data import integrate
 from multi import multilevel_generalise
 import json
+from sac import sac_algorithm
 from census import *
 import csv
 from flask_cors import CORS
@@ -21,7 +22,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 def hello_world():
     return "<p>Hello world</p>"
 
-
 @app.route("/multi/<int:sz>/<int:k>")
 #@crossdomain(origin='*',headers=['access-control-allow-origin','Content-Type'])
 def get_multi_table(sz, k):
@@ -29,7 +29,15 @@ def get_multi_table(sz, k):
     mlevel = convert_csv_to_arr("result.csv")
     return {"multi_level" : mlevel}
 
-
+# implements the sac algorithm
+@app.route("/sac/<int:records>/<int:k>")
+#@crossdomain(origin='*',headers=['access-control-allow-origin','Content-Type'])
+def get_sac(records, k):
+    sac_algorithm(records, k)
+    sac = convert_csv_to_arr("sac_result.csv")
+    print("Here in the type " , type(sac))
+    print(sac[0])
+    return {"sac" : sac}
 
 @app.route("/table/<int:sz>/<int:k>/<int:doblvl>/<int:wclasslvl>")
 #@crossdomain(origin='*',headers=['access-control-allow-origin','Content-Type'])
@@ -166,5 +174,6 @@ def updatepurpose():
 
 
 if __name__ == "__main__":
+    app.run()
     #app.run(host="0.0.0.0", port=7542) 
-    app.run(use_reloader=True, debug=True)
+    #app.run(use_reloader=True, debug=True)

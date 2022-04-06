@@ -1,12 +1,37 @@
 import sqlite3
 
-conn = sqlite3.connect("thirdparty.db")
+conn = sqlite3.connect("tables.db")
 
 cur = conn.cursor()
 
-#cur.execute("""delete from THIRDPARTY values ("B pvt.ltd", "Clothes manufacture", "Setting up industry", "India")""")
+# cur.execute("""
+#     select * from CENSUSCOLLECTOR
+# """)
 
-cur.execute("""delete from THIRDPARTY where orgname = 'C pvt.ltd' """)
+#cur.execute('''DELETE FROM THIRDPARTY WHERE orgname = D''')
 
+# cur.execute("""
+#     insert into PERSON values ( 
+#             "10",
+#             30,
+#             "Asian",
+#             20,
+#             20,
+#             "Male",
+#             "India",
+#             "Singer",
+#             "Married",
+#             15,
+#             0,
+#             "Private",
+#             "India",
+#             0
+#         )
+# """)
+
+
+cur.execute("""
+    insert into EDUCATION values(10, "High School")
+""")
 conn.commit()
 conn.close()
