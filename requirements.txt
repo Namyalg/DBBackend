@@ -8,7 +8,7 @@ autopep8
 certifi
 click
 flask-cors
-Flask==1.1.2
+Flask==2.0.3
 gunicorn
 isort
 itsdangerous
