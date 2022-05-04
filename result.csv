@@ -1,0 +1,21 @@
+,dob,workclass,occupation,level,g_dob,g_workclass
+26280,11/01/1970,private,machineopinspct,"(3, 0)",1970-1980,private
+7283,27/03/1975,private,machineopinspct,"(3, 0)",1970-1980,private
+8852,05/02/1975,private,profspecialty,"(3, 0)",1970-1980,private
+2891,13/02/1971,private,otherservice,"(3, 0)",1970-1980,private
+1213,25/03/1978,private,admclerical,"(3, 0)",1970-1980,private
+5911,25/03/1992,private,profspecialty,"(3, 3)",1990-2000,withpay
+3873,24/02/1996,private,admclerical,"(3, 3)",1990-2000,withpay
+8051,12/03/1998,private,otherservice,"(3, 3)",1990-2000,withpay
+21219,10/03/1993,selfempnotinc,sales,"(3, 3)",1990-2000,withpay
+2859,20/03/1977,localgov,farmingfishing,"(4, 3)",1975-2000,withpay
+1125,11/02/1988,private,craftrepair,"(4, 3)",1975-2000,withpay
+31757,08/02/1983,private,machineopinspct,"(4, 3)",1975-2000,withpay
+10567,18/01/1975,selfempinc,execmanagerial,"(4, 3)",1975-2000,withpay
+18230,29/01/1985,selfempnotinc,profspecialty,"(4, 3)",1975-2000,withpay
+3655,18/01/1970,localgov,protectiveserv,"(5, 5)",1950-1975,working
+27895,10/01/1968,private,otherservice,"(5, 5)",1950-1975,working
+1752,17/01/1954,selfempnotinc,sales,"(5, 5)",1950-1975,working
+26708,03/02/2005,notworking,nooccupation,"(5, 5)",2000-2025,notworking
+12967,13/01/2000,private,admclerical,"(5, 5)",2000-2025,working
+20433,22/02/2002,private,admclerical,"(5, 5)",2000-2025,working
