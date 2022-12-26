@@ -30,13 +30,11 @@ def get_multi_table(sz, k):
     return {"multi_level" : mlevel}
 
 # implements the sac algorithm
-@app.route("/sac/<int:records>/<int:k>")
+@app.route("/custom/<int:records>/<int:k>")
 #@crossdomain(origin='*',headers=['access-control-allow-origin','Content-Type'])
 def get_sac(records, k):
     sac_algorithm(records, k)
     sac = convert_csv_to_arr("sac_result.csv")
-    print("Here in the type " , type(sac))
-    print(sac[0])
     return {"sac" : sac}
 
 @app.route("/table/<int:sz>/<int:k>/<int:doblvl>/<int:wclasslvl>")
