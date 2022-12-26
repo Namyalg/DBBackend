@@ -152,7 +152,6 @@ def insertjurisdiction():
     return insert_jurisdiction()
     
 
-
 #third party
 @app.route("/thirdparty", methods=["GET"])
 def getthirdparty():
@@ -170,6 +169,11 @@ def delthirdparty(orgname):
 def updatepurpose():
     return update_purpose()
 
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return {"status" : 0 , "message" : "Route not found, try another route"}
 
 if __name__ == "__main__":
     app.run(debug=True, port=33507)
